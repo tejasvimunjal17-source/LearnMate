@@ -141,41 +141,47 @@ def inject_css(dark_mode: bool = True) -> None:
             visibility: hidden !important;
         }}
         
-        /* Hides main options menu toolbar but allows layout parameters to float */
         #MainMenu, footer, div[data-testid="stToolbar"] {{
             display: none !important;
             visibility: hidden !important;
         }}
+        
+        /* Removes any default white header bars across the top layer */
+        header, [data-testid="stHeader"] {{
+            background-color: transparent !important;
+            background: transparent !important;
+        }}
 
-        /* --- FIXED FLOATING SIDEBAR TOGGLE BUTTON FOR MOBILE --- */
-        /* Forces the trigger button to sit fixed in the top-left layout stack */
+        /* --- DOCK PANEL TRIGGER (TOP-LEFT CORNER CONSOLE TAB) --- */
+        /* Places the sidebar panel control cleanly into the top corner grid */
         [data-testid="stSidebarCollapseButton"] {{
             position: fixed !important;
-            top: 12px !important;
-            left: 12px !important;
+            top: 0px !important;
+            left: 0px !important;
             z-index: 9999999 !important;
             display: block !important;
             visibility: visible !important;
         }}
 
         [data-testid="stSidebarCollapseButton"] button {{
-            background-color: var(--bg-elevated) !important;
-            color: var(--text) !important;
-            border: 1px solid var(--surface-border) !important;
-            border-radius: 8px !important;
+            background-color: #111633 !important;
+            color: #EDEEFB !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            border-radius: 0px 0px 8px 0px !important;
             box-shadow: var(--shadow) !important;
-            width: 40px !important;
-            height: 40px !important;
-            display: flex !important;
+            height: 36px !important;
+            width: 44px !important;
+            display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
         }}
 
-        /* Ensures the text forms and dropdown chevrons aren't altered */
+        /* Keeps selector control chevrons untouched */
         [data-testid="stSelectbox"] button {{
             background-color: transparent !important;
             border: none !important;
             box-shadow: none !important;
+            border-radius: 0px !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
