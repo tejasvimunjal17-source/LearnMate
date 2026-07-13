@@ -52,6 +52,9 @@ def _get_clean_vars(dark: bool) -> str:
             "--secondary-background-color: #161A3A;"
             "--text-color: #EDEEFB;"
             "--primary-color: #7C5CFF;"
+            "--input-text: #FFFFFF;"          # Force pure white text in inputs
+            "--btn-submit-text: #0F1229;"     # Force deep dark text for the button
+            "--btn-submit-bg: #22D3B0;"       # Keep button bright accent
         )
     return (
         "--bg: #F7F8FC;"
@@ -65,11 +68,13 @@ def _get_clean_vars(dark: bool) -> str:
         "--secondary-background-color: #FFFFFF;"
         "--text-color: #1B1E33;"
         "--primary-color: #7C5CFF;"
+        "--input-text: #1B1E33;"          # Normal dark text for light mode inputs
+        "--btn-submit-text: #FFFFFF;"     # White text for light mode button
+        "--btn-submit-bg: #7C5CFF;"       # Violet background for light mode
     )
 
 def inject_css(dark_mode: bool = True) -> None:
     """Injects standard configuration tokens safely without page leaks."""
-    # FIXED: Corrected typo from _get_get_clean_vars to _get_clean_vars
     tokens = _get_clean_vars(dark_mode)
     
     css_payload = f"""
@@ -98,6 +103,25 @@ def inject_css(dark_mode: bool = True) -> None:
         h1, h2, h3, h4, .pathway-display {{
             font-family: 'Space Grotesk', sans-serif !important;
             color: var(--text) !important;
+        }}
+
+        /* --- INPUT FIELD OVERRIDES --- */
+        /* Targets text inputs, textareas, and selectbox selected labels */
+        [data-testid="stTextInput"] input, 
+        [data-testid="stTextArea"] textarea,
+        [data-testid="stSelectbox"] div[data-baseweb="select"] div,
+        [data-testid="stNumberInput"] input {{
+            color: var(--input-text) !important;
+            -webkit-text-fill-color: var(--input-text) !important;
+        }}
+
+        /* --- BUTTON OVERRIDE --- */
+        /* Explicitly targets the Form Submit Button text and background color */
+        div.stFormSubmitButton > button {{
+            color: var(--btn-submit-text) !important;
+            background-color: var(--btn-submit-bg) !important;
+            border: none !important;
+            font-weight: 600 !important;
         }}
 
         /* Custom presentation structures */
