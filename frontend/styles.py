@@ -52,12 +52,12 @@ def _get_clean_vars(dark: bool) -> str:
             "--secondary-background-color: #161A3A;"
             "--text-color: #EDEEFB;"
             "--primary-color: #7C5CFF;"
-            "--label-text: #EDEEFB;"          # Crisp bright labels on dark canvas
-            "--input-bg: #FFFFFF;"            # White box background
-            "--input-text: #111633;"          # Deep dark text inside white boxes
-            "--input-placeholder: #6E759F;"   # Readable placeholder text
-            "--btn-submit-text: #0F1229;"     # Force deep dark text for the button
-            "--btn-submit-bg: #22D3B0;"       # Keep button bright accent
+            "--label-text: #EDEEFB;"          
+            "--input-bg: #FFFFFF;"            
+            "--input-text: #111633;"          
+            "--input-placeholder: #6E759F;"   
+            "--btn-submit-text: #0F1229;"     
+            "--btn-submit-bg: #22D3B0;"       
         )
     return (
         "--bg: #F7F8FC;"
@@ -71,12 +71,12 @@ def _get_clean_vars(dark: bool) -> str:
         "--secondary-background-color: #FFFFFF;"
         "--text-color: #1B1E33;"
         "--primary-color: #7C5CFF;"
-        "--label-text: #1B1E33;"          # Dark labels for light mode canvas
-        "--input-bg: #F0F2F6;"            # Standard light input box
-        "--input-text: #1B1E33;"          # Dark text inside boxes
-        "--input-placeholder: #7D849B;"   # Muted placeholder
-        "--btn-submit-text: #FFFFFF;"     # White text for light mode button
-        "--btn-submit-bg: #7C5CFF;"       # Violet background for light mode
+        "--label-text: #1B1E33;"          
+        "--input-bg: #F0F2F6;"            
+        "--input-text: #1B1E33;"          
+        "--input-placeholder: #7D849B;"   
+        "--btn-submit-text: #FFFFFF;"     
+        "--btn-submit-bg: #7C5CFF;"       
     )
 
 def inject_css(dark_mode: bool = True) -> None:
@@ -112,13 +112,11 @@ def inject_css(dark_mode: bool = True) -> None:
         }}
 
         /* --- INPUT LABELS & CONTAINER FILL CORRECTIONS --- */
-        /* Forces the field names above the boxes to stay legible */
         [data-testid="stWidgetLabel"] p {{
             color: var(--label-text) !important;
             font-weight: 500 !important;
         }}
 
-        /* Targets text inputs, textareas, number controls, and drop-down fields */
         [data-testid="stTextInput"] input, 
         [data-testid="stTextArea"] textarea,
         [data-testid="stSelectbox"] div[data-baseweb="select"] div,
@@ -128,54 +126,45 @@ def inject_css(dark_mode: bool = True) -> None:
             -webkit-text-fill-color: var(--input-text) !important;
         }}
 
-        /* Fixes native dropdown selection lists matching structural background values */
         ul[role="listbox"] li {{
             color: #111633 !important;
         }}
 
-        /* Forces input placeholders to be visible and distinct */
         input::placeholder, textarea::placeholder {{
             color: var(--input-placeholder) !important;
             opacity: 1 !important;
         }}
 
         /* --- REMOVE EDIT INSTRUCTIONS & APP FOOTERS --- */
-        /* Hides the "Press Ctrl+Enter to submit form" helper text label completely */
         [data-testid="stForm"] data-testid, .stTextArea caption, [data-testid="InputInstructions"] {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        /* Hides the core Streamlit menu and footer branding lines */
+        /* Hides main options menu toolbar but keeps the layout container running */
         #MainMenu, footer, div[data-testid="stToolbar"] {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        /* Adjusts the header container so it doesn't block the screen, but KEEPS the open/close arrow buttons visible */
+        /* Permits the header block space to serve the floating expand/collapse trigger */
         header {{
             background-color: transparent !important;
-            height: 3.5rem !important;
         }}
 
-        /* Ensures the collapse/expand sidebar buttons stay crisp, layered on top, and fully clickable */
-        [data-testid="stSidebarCollapseButton"], 
-        button[title="Maximize app data viewport"],
-        [class*="st-emotion-cache"] button {{
+        /* --- HYPER-TARGETED SIDEBAR FLIP BUTTONS --- */
+        /* Changes only the slide out/in arrow icon targets into accessible buttons */
+        [data-testid="stSidebarCollapseButton"] button,
+        button[title="Collapse sidebar"],
+        button[title="Expand sidebar"] {{
             z-index: 999999 !important;
             background-color: var(--bg-elevated) !important;
             color: var(--text) !important;
             border: 1px solid var(--surface-border) !important;
             border-radius: 50% !important;
             box-shadow: var(--shadow) !important;
-        }}
-
-        /* Hides the developer management console overlay from the viewport */
-        [data-testid="stAppDeployButton"], 
-        .viewerBadge_container__1QSob, 
-        [class^="viewerBadge_"] {{
-            display: none !important;
-            visibility: hidden !important;
+            display: flex !important;
+            visibility: visible !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
