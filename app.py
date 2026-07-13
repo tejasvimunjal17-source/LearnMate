@@ -68,7 +68,7 @@ inject_css(dark_mode=st.session_state["dark_mode"])
 # ----------------------------------------------------------------------
 with st.sidebar:
     st.markdown(
-        "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 Career Pathway</h2>"
+        "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 LearnMate AI</h2>"
         "<p class='muted' style='margin-top:2px;'>AI Mentor powered by IBM Granite</p>",
         unsafe_allow_html=True,
     )
