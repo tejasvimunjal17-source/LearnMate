@@ -55,13 +55,18 @@ def _theme_vars(dark: bool) -> str:
         --shadow: 0 8px 24px rgba(30,32,70,0.08);
         """
 
+def _theme_vars(...):
+    ...
+
+def _flatten(text: str) -> str:
+    """Remove leading indentation from HTML/CSS before sending to Streamlit."""
+    return "\n".join(line.lstrip() for line in text.strip().splitlines())
 
 def inject_css(dark_mode: bool = True) -> None:
     """Inject the full custom design system into the current Streamlit page."""
     theme_vars = _theme_vars(dark_mode)
 
-    st.markdown(
-        f"""
+    css = f"""
         <link rel="stylesheet" href="{FONT_IMPORT}">
         <style>
         :root {{
@@ -288,6 +293,9 @@ def inject_css(dark_mode: bool = True) -> None:
             .glass-card, .metric-card, .progress-fill {{ animation: none !important; }}
         }}
         </style>
-        """,
+        """
+
+    st.markdown(
+        _flatten(css),
         unsafe_allow_html=True,
     )
