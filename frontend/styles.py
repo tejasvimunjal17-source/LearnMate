@@ -146,42 +146,66 @@ def inject_css(dark_mode: bool = True) -> None:
             visibility: hidden !important;
         }}
         
-        /* Removes any default white header bars across the top layer */
         header, [data-testid="stHeader"] {{
             background-color: transparent !important;
             background: transparent !important;
         }}
 
-        /* --- DOCK PANEL TRIGGER (TOP-LEFT CORNER CONSOLE TAB) --- */
-        /* Places the sidebar panel control cleanly into the top corner grid */
-        [data-testid="stSidebarCollapseButton"] {{
+        /* --- PERSISTENT CONSOLE TAB FOR SIDEBAR TOGGLE --- */
+        /* Targets BOTH states (collapsed/open) wrapper containers and fixes them to the top-left */
+        [data-testid="stSidebarCollapseButton"],
+        div:has(> button[title="Expand sidebar"]),
+        div:has(> button[title="Collapse sidebar"]) {{
             position: fixed !important;
             top: 0px !important;
             left: 0px !important;
             z-index: 9999999 !important;
+            margin: 0 !important;
+            padding: 0 !important;
             display: block !important;
             visibility: visible !important;
         }}
 
-        [data-testid="stSidebarCollapseButton"] button {{
+        /* Styles ONLY the internal panel action buttons */
+        [data-testid="stSidebarCollapseButton"] button,
+        button[title="Expand sidebar"],
+        button[title="Collapse sidebar"] {{
             background-color: #111633 !important;
             color: #EDEEFB !important;
             border: 1px solid rgba(255,255,255,0.08) !important;
             border-radius: 0px 0px 8px 0px !important;
-            box-shadow: var(--shadow) !important;
-            height: 36px !important;
             width: 44px !important;
+            height: 36px !important;
+            min-height: 36px !important;
+            max-height: 36px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+            cursor: pointer !important;
+            transition: background-color 0.2s ease !important;
         }}
 
-        /* Keeps selector control chevrons untouched */
-        [data-testid="stSelectbox"] button {{
+        /* Hover state matching the manage app drawer feel */
+        [data-testid="stSidebarCollapseButton"] button:hover,
+        button[title="Expand sidebar"]:hover,
+        button[title="Collapse sidebar"]:hover {{
+            background-color: #161A3A !important;
+        }}
+
+        /* STRICT ISOLATION LAYER: Restores form component integrity across cache classes */
+        [data-testid="stSelectbox"] button,
+        [data-testid="stNumberInput"] button,
+        div[data-baseweb="select"] button {{
+            position: static !important;
             background-color: transparent !important;
+            color: inherit !important;
             border: none !important;
-            box-shadow: none !important;
             border-radius: 0px !important;
+            width: auto !important;
+            height: auto !important;
+            box-shadow: none !important;
+            z-index: auto !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
