@@ -52,7 +52,10 @@ def _get_clean_vars(dark: bool) -> str:
             "--secondary-background-color: #161A3A;"
             "--text-color: #EDEEFB;"
             "--primary-color: #7C5CFF;"
-            "--input-text: #FFFFFF;"          # Force pure white text in inputs
+            "--label-text: #EDEEFB;"          # Crisp bright labels on dark canvas
+            "--input-bg: #FFFFFF;"            # White box background
+            "--input-text: #111633;"          # Deep dark text inside white boxes
+            "--input-placeholder: #6E759F;"   # Readable placeholder text
             "--btn-submit-text: #0F1229;"     # Force deep dark text for the button
             "--btn-submit-bg: #22D3B0;"       # Keep button bright accent
         )
@@ -68,7 +71,10 @@ def _get_clean_vars(dark: bool) -> str:
         "--secondary-background-color: #FFFFFF;"
         "--text-color: #1B1E33;"
         "--primary-color: #7C5CFF;"
-        "--input-text: #1B1E33;"          # Normal dark text for light mode inputs
+        "--label-text: #1B1E33;"          # Dark labels for light mode canvas
+        "--input-bg: #F0F2F6;"            # Standard light input box
+        "--input-text: #1B1E33;"          # Dark text inside boxes
+        "--input-placeholder: #7D849B;"   # Muted placeholder
         "--btn-submit-text: #FFFFFF;"     # White text for light mode button
         "--btn-submit-bg: #7C5CFF;"       # Violet background for light mode
     )
@@ -105,18 +111,52 @@ def inject_css(dark_mode: bool = True) -> None:
             color: var(--text) !important;
         }}
 
-        /* --- INPUT FIELD OVERRIDES --- */
-        /* Targets text inputs, textareas, and selectbox selected labels */
+        /* --- INPUT LABELS & CONTAINER FILL CORRECTIONS --- */
+        /* Forces the field names above the boxes to stay legible */
+        [data-testid="stWidgetLabel"] p {{
+            color: var(--label-text) !important;
+            font-weight: 500 !important;
+        }}
+
+        /* Targets text inputs, textareas, number controls, and drop-down fields */
         [data-testid="stTextInput"] input, 
         [data-testid="stTextArea"] textarea,
         [data-testid="stSelectbox"] div[data-baseweb="select"] div,
         [data-testid="stNumberInput"] input {{
+            background-color: var(--input-bg) !important;
             color: var(--input-text) !important;
             -webkit-text-fill-color: var(--input-text) !important;
         }}
 
+        /* Fixes native dropdown selection lists matching structural background values */
+        ul[role="listbox"] li {{
+            color: #111633 !important;
+        }}
+
+        /* Forces input placeholders to be visible and distinct */
+        input::placeholder, textarea::placeholder {{
+            color: var(--input-placeholder) !important;
+            opacity: 1 !important;
+        }}
+
+        /* --- REMOVE EDIT INSTRUCTIONS & APP FOOTERS --- */
+        /* Hides the "Press Ctrl+Enter to submit form" helper text label completely */
+        [data-testid="stForm"] data-testid, .stTextArea caption, [data-testid="InputInstructions"] {{
+            display: none !important;
+            visibility: hidden !important;
+        }}
+        
+        /* Hides Streamlit main header toolbar menu and footer branding lines */
+        #MainMenu, header, footer {{
+            display: none !important;
+            visibility: hidden !important;
+        }}
+        
+        div[data-testid="stToolbar"] {{
+            display: none !important;
+        }}
+
         /* --- BUTTON OVERRIDE --- */
-        /* Explicitly targets the Form Submit Button text and background color */
         div.stFormSubmitButton > button {{
             color: var(--btn-submit-text) !important;
             background-color: var(--btn-submit-bg) !important;
