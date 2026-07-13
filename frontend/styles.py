@@ -69,7 +69,8 @@ def _get_clean_vars(dark: bool) -> str:
 
 def inject_css(dark_mode: bool = True) -> None:
     """Injects standard configuration tokens safely without page leaks."""
-    tokens = _get_get_clean_vars(dark_mode)
+    # FIXED: Corrected typo from _get_get_clean_vars to _get_clean_vars
+    tokens = _get_clean_vars(dark_mode)
     
     css_payload = f"""
     <link rel="stylesheet" href="{FONT_IMPORT}">
