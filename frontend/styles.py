@@ -141,27 +141,41 @@ def inject_css(dark_mode: bool = True) -> None:
             visibility: hidden !important;
         }}
         
-        /* Hides top toolbar options but allows header element structure to pass styles */
+        /* Hides main options menu toolbar but allows layout parameters to float */
         #MainMenu, footer, div[data-testid="stToolbar"] {{
             display: none !important;
             visibility: hidden !important;
         }}
-        
-        header {{
-            background-color: transparent !important;
+
+        /* --- FIXED FLOATING SIDEBAR TOGGLE BUTTON FOR MOBILE --- */
+        /* Forces the trigger button to sit fixed in the top-left layout stack */
+        [data-testid="stSidebarCollapseButton"] {{
+            position: fixed !important;
+            top: 12px !important;
+            left: 12px !important;
+            z-index: 9999999 !important;
+            display: block !important;
+            visibility: visible !important;
         }}
 
-        /* --- HYPER-TARGETED SIDEBAR ARROW ACTION BUTTONS --- */
-        /* Targets strictly the chevron/arrow buttons container for the sidebar view control */
-        div[data-testid="stSidebarCollapseButton"] button {{
+        [data-testid="stSidebarCollapseButton"] button {{
             background-color: var(--bg-elevated) !important;
             color: var(--text) !important;
             border: 1px solid var(--surface-border) !important;
             border-radius: 8px !important;
             box-shadow: var(--shadow) !important;
-            display: inline-flex !important;
-            visibility: visible !important;
-            z-index: 999999 !important;
+            width: 40px !important;
+            height: 40px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }}
+
+        /* Ensures the text forms and dropdown chevrons aren't altered */
+        [data-testid="stSelectbox"] button {{
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
