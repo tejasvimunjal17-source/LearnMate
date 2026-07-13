@@ -141,30 +141,27 @@ def inject_css(dark_mode: bool = True) -> None:
             visibility: hidden !important;
         }}
         
-        /* Hides main options menu toolbar but keeps the layout container running */
+        /* Hides top toolbar options but allows header element structure to pass styles */
         #MainMenu, footer, div[data-testid="stToolbar"] {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        /* Permits the header block space to serve the floating expand/collapse trigger */
         header {{
             background-color: transparent !important;
         }}
 
-        /* --- HYPER-TARGETED SIDEBAR FLIP BUTTONS --- */
-        /* Changes only the slide out/in arrow icon targets into accessible buttons */
-        [data-testid="stSidebarCollapseButton"] button,
-        button[title="Collapse sidebar"],
-        button[title="Expand sidebar"] {{
-            z-index: 999999 !important;
+        /* --- HYPER-TARGETED SIDEBAR ARROW ACTION BUTTONS --- */
+        /* Targets strictly the chevron/arrow buttons container for the sidebar view control */
+        div[data-testid="stSidebarCollapseButton"] button {{
             background-color: var(--bg-elevated) !important;
             color: var(--text) !important;
             border: 1px solid var(--surface-border) !important;
-            border-radius: 50% !important;
+            border-radius: 8px !important;
             box-shadow: var(--shadow) !important;
-            display: flex !important;
+            display: inline-flex !important;
             visibility: visible !important;
+            z-index: 999999 !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
