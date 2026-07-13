@@ -146,14 +146,36 @@ def inject_css(dark_mode: bool = True) -> None:
             visibility: hidden !important;
         }}
         
-        /* Hides Streamlit main header toolbar menu and footer branding lines */
-        #MainMenu, header, footer {{
+        /* Hides the core Streamlit menu and footer branding lines */
+        #MainMenu, footer, div[data-testid="stToolbar"] {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        div[data-testid="stToolbar"] {{
+        /* Adjusts the header container so it doesn't block the screen, but KEEPS the open/close arrow buttons visible */
+        header {{
+            background-color: transparent !important;
+            height: 3.5rem !important;
+        }}
+
+        /* Ensures the collapse/expand sidebar buttons stay crisp, layered on top, and fully clickable */
+        [data-testid="stSidebarCollapseButton"], 
+        button[title="Maximize app data viewport"],
+        [class*="st-emotion-cache"] button {{
+            z-index: 999999 !important;
+            background-color: var(--bg-elevated) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--surface-border) !important;
+            border-radius: 50% !important;
+            box-shadow: var(--shadow) !important;
+        }}
+
+        /* Hides the developer management console overlay from the viewport */
+        [data-testid="stAppDeployButton"], 
+        .viewerBadge_container__1QSob, 
+        [class^="viewerBadge_"] {{
             display: none !important;
+            visibility: hidden !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
