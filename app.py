@@ -58,7 +58,7 @@ DEFAULTS = {
     "profile": None,
     "roadmap": None,
     "completed_weeks": set(),
-    "page": "Landing",
+    "page": "Profile", 
 }
 for key, value in DEFAULTS.items():
     st.session_state.setdefault(key, value)
@@ -66,9 +66,10 @@ for key, value in DEFAULTS.items():
 inject_css(dark_mode=st.session_state["dark_mode"])
 
 # If the user is on the landing page, show it and stop executing the rest of app.py
-if st.session_state["page"] == "Landing":
+if st.session_state["show_landing"]:
     render_landing_page()
     st.stop()
+
 
 # Sidebar navigation
 # -------------------------------------------------------------
