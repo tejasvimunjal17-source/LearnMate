@@ -52,12 +52,12 @@ def _get_clean_vars(dark: bool) -> str:
             "--secondary-background-color: #161A3A;"
             "--text-color: #EDEEFB;"
             "--primary-color: #7C5CFF;"
-            "--label-text: #EDEEFB;"          
-            "--input-bg: #FFFFFF;"            
-            "--input-text: #111633;"          
-            "--input-placeholder: #6E759F;"   
-            "--btn-submit-text: #0F1229;"     
-            "--btn-submit-bg: #22D3B0;"       
+            "--label-text: #EDEEFB;"          # Crisp bright labels on dark canvas
+            "--input-bg: #FFFFFF;"            # White box background
+            "--input-text: #111633;"          # Deep dark text inside white boxes
+            "--input-placeholder: #6E759F;"   # Readable placeholder text
+            "--btn-submit-text: #0F1229;"     # Force deep dark text for the button
+            "--btn-submit-bg: #22D3B0;"       # Keep button bright accent
         )
     return (
         "--bg: #F7F8FC;"
@@ -71,12 +71,12 @@ def _get_clean_vars(dark: bool) -> str:
         "--secondary-background-color: #FFFFFF;"
         "--text-color: #1B1E33;"
         "--primary-color: #7C5CFF;"
-        "--label-text: #1B1E33;"          
-        "--input-bg: #F0F2F6;"            
-        "--input-text: #1B1E33;"          
-        "--input-placeholder: #7D849B;"   
-        "--btn-submit-text: #FFFFFF;"     
-        "--btn-submit-bg: #7C5CFF;"       
+        "--label-text: #1B1E33;"          # Dark labels for light mode canvas
+        "--input-bg: #F0F2F6;"            # Standard light input box
+        "--input-text: #1B1E33;"          # Dark text inside boxes
+        "--input-placeholder: #7D849B;"   # Muted placeholder
+        "--btn-submit-text: #FFFFFF;"     # White text for light mode button
+        "--btn-submit-bg: #7C5CFF;"       # Violet background for light mode
     )
 
 def inject_css(dark_mode: bool = True) -> None:
@@ -112,11 +112,13 @@ def inject_css(dark_mode: bool = True) -> None:
         }}
 
         /* --- INPUT LABELS & CONTAINER FILL CORRECTIONS --- */
+        /* Forces the field names above the boxes to stay legible */
         [data-testid="stWidgetLabel"] p {{
             color: var(--label-text) !important;
             font-weight: 500 !important;
         }}
 
+        /* Targets text inputs, textareas, number controls, and drop-down fields */
         [data-testid="stTextInput"] input, 
         [data-testid="stTextArea"] textarea,
         [data-testid="stSelectbox"] div[data-baseweb="select"] div,
@@ -126,86 +128,32 @@ def inject_css(dark_mode: bool = True) -> None:
             -webkit-text-fill-color: var(--input-text) !important;
         }}
 
+        /* Fixes native dropdown selection lists matching structural background values */
         ul[role="listbox"] li {{
             color: #111633 !important;
         }}
 
+        /* Forces input placeholders to be visible and distinct */
         input::placeholder, textarea::placeholder {{
             color: var(--input-placeholder) !important;
             opacity: 1 !important;
         }}
 
         /* --- REMOVE EDIT INSTRUCTIONS & APP FOOTERS --- */
+        /* Hides the "Press Ctrl+Enter to submit form" helper text label completely */
         [data-testid="stForm"] data-testid, .stTextArea caption, [data-testid="InputInstructions"] {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        #MainMenu, footer, div[data-testid="stToolbar"] {{
+        /* Hides Streamlit main header toolbar menu and footer branding lines */
+        #MainMenu, header, footer {{
             display: none !important;
             visibility: hidden !important;
         }}
         
-        header, [data-testid="stHeader"] {{
-            background-color: transparent !important;
-            background: transparent !important;
-        }}
-
-        /* --- PERSISTENT CONSOLE TAB FOR SIDEBAR TOGGLE --- */
-        /* Targets BOTH states (collapsed/open) wrapper containers and fixes them to the top-left */
-        [data-testid="stSidebarCollapseButton"],
-        div:has(> button[title="Expand sidebar"]),
-        div:has(> button[title="Collapse sidebar"]) {{
-            position: fixed !important;
-            top: 0px !important;
-            left: 0px !important;
-            z-index: 9999999 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            display: block !important;
-            visibility: visible !important;
-        }}
-
-        /* Styles ONLY the internal panel action buttons */
-        [data-testid="stSidebarCollapseButton"] button,
-        button[title="Expand sidebar"],
-        button[title="Collapse sidebar"] {{
-            background-color: #111633 !important;
-            color: #EDEEFB !important;
-            border: 1px solid rgba(255,255,255,0.08) !important;
-            border-radius: 0px 0px 8px 0px !important;
-            width: 44px !important;
-            height: 36px !important;
-            min-height: 36px !important;
-            max-height: 36px !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
-            cursor: pointer !important;
-            transition: background-color 0.2s ease !important;
-        }}
-
-        /* Hover state matching the manage app drawer feel */
-        [data-testid="stSidebarCollapseButton"] button:hover,
-        button[title="Expand sidebar"]:hover,
-        button[title="Collapse sidebar"]:hover {{
-            background-color: #161A3A !important;
-        }}
-
-        /* STRICT ISOLATION LAYER: Restores form component integrity across cache classes */
-        [data-testid="stSelectbox"] button,
-        [data-testid="stNumberInput"] button,
-        div[data-baseweb="select"] button {{
-            position: static !important;
-            background-color: transparent !important;
-            color: inherit !important;
-            border: none !important;
-            border-radius: 0px !important;
-            width: auto !important;
-            height: auto !important;
-            box-shadow: none !important;
-            z-index: auto !important;
+        div[data-testid="stToolbar"] {{
+            display: none !important;
         }}
 
         /* --- BUTTON OVERRIDE --- */
