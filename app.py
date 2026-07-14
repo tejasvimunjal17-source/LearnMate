@@ -15,8 +15,6 @@ from __future__ import annotations
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-from frontend.chatbot_widget import render_chatbot
-
 from config import CONFIG
 from agent_instructions import DOMAIN_SPECIALIZATION
 from backend.logger_setup import get_logger
@@ -26,7 +24,8 @@ from backend.skill_gap import normalize_skill_gaps, overall_readiness_percent
 from backend.pdf_report import build_pdf_report
 from utils.validators import validate_profile
 
-from frontend.styles import inject_css
+from frontend.styles import inject_
+from frontend.chatbot_widget import render_chatbot
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
     pill_row, milestone_node, skill_gap_row, empty_state,
@@ -410,4 +409,7 @@ except Exception as exc:  # noqa: BLE001 - top-level safety net
     st.error(f"An unexpected error occurred: {exc}")
     st.caption("Please refresh the page or check the logs for more details.")
 
+# ------------------------------------------------------
+# IBM watsonx Orchestrate Chatbot
+# ------------------------------------------------------
 render_chatbot()
