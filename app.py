@@ -99,22 +99,15 @@ with st.sidebar:
     if dark != st.session_state["dark_mode"]:
         st.session_state["dark_mode"] = dark
         st.rerun()
-
     st.markdown("---")
-if st.sidebar.button("🏠 Back to Home"):
-    st.session_state["page"] = "Landing"
-    st.rerun()
-
-st.markdown("---")
 status_ok = CONFIG.is_configured
-    status_label = "🟢 watsonx.ai configured" if status_ok else "🟡 Offline demo mode"
-    st.caption(status_label)
-    if not status_ok:
-        st.caption(
-            "Add WATSONX_API_KEY, WATSONX_PROJECT_ID, WATSONX_URL and "
-            "WATSONX_MODEL_ID to your .env file to enable live AI generation."
-        )
-
+status_label = "🟢 watsonx.ai configured" if status_ok else "🟡 Offline demo mode"
+st.caption(status_label)
+if not status_ok:
+    st.caption(
+        "Add WATSONX_API_KEY, WATSONX_PROJECT_ID, WATSONX_URL and "
+        "WATSONX_MODEL_ID to your .env file to enable live AI generation."
+    )
 
 # ----------------------------------------------------------------------
 # PAGE: Profile
