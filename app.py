@@ -25,7 +25,6 @@ from backend.pdf_report import build_pdf_report
 from utils.validators import validate_profile
 
 from frontend.styles import inject_css
-from frontend.chatbot_widget import render_chatbot
 
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
@@ -394,27 +393,3 @@ def render_dashboard_page() -> None:
     if gaps:
         st.plotly_chart(skill_gap_bar(gaps, st.session_state["dark_mode"]), use_container_width=True)
 
-
-# ----------------------------------------------------------------------
-# Router
-# ----------------------------------------------------------------------
-PAGES = {
-    "Profile": render_profile_page,
-    "AI Roadmap": render_roadmap_page,
-    "Skill Gap": render_skill_gap_page,
-    "Courses & Certs": render_courses_page,
-    "Progress Tracker": render_progress_page,
-    "Dashboard": render_dashboard_page,
-}
-
-try:
-    PAGES[st.session_state["page"]]()
-except Exception as exc:  # noqa: BLE001 - top-level safety net
-    logger.exception("Unhandled error rendering page '%s'", st.session_state["page"])
-    st.error(f"An unexpected error occurred: {exc}")
-    st.caption("Please refresh the page or check the logs for more details.")
-
-# ------------------------------------------------------
-# IBM watsonx Orchestrate Chatbot
-# ------------------------------------------------------
-render_chatbot()
