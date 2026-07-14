@@ -73,7 +73,7 @@ inject_css(dark_mode=st.session_state["dark_mode"])
 # Sidebar navigation
 # -------------------------------------------------------------
 
-# -------------------------
+ # -------------------------
 # Custom Sidebar
 # -------------------------
 
@@ -88,34 +88,45 @@ with col1:
 
 if st.session_state.menu_open:
 
-   with col1:
-    st.markdown(
-        "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 LearnMate AI</h2>"
-        "<p class='muted' style='margin-top:2px;'>AI Mentor powered by IBM Granite</p>",
-        unsafe_allow_html=True,
-    )
-    st.markdown("---")
+    with col1:
 
-    page = option_menu(
-        menu_title=None,
-        options=["Profile", "AI Roadmap", "Skill Gap", "Courses & Certs", "Progress Tracker", "Dashboard"],
-        icons=["person-badge", "signpost-split", "bar-chart-steps", "mortarboard", "check2-square", "grid-1x2"],
-        default_index=["Profile", "AI Roadmap", "Skill Gap", "Courses & Certs", "Progress Tracker", "Dashboard"].index(st.session_state["page"]),
-        styles={
-            "container": {"padding": "0", "background-color": "transparent"},
-            "icon": {"color": "#7C5CFF", "font-size": "16px"},
-            "nav-link": {"font-size": "14px", "text-align": "left", "margin": "2px 0", "border-radius": "10px"},
-            "nav-link-selected": {"background": "linear-gradient(120deg, #7C5CFF, #22D3B0)", "color": "white"},
-        },
-    )
-    st.session_state["page"] = page
+        st.markdown("## 🧭 LearnMate AI")
+        st.caption("AI Mentor powered by IBM Granite")
 
-    st.markdown("---")
-    dark = st.toggle("🌙 Dark Mode", value=st.session_state["dark_mode"])
-    if dark != st.session_state["dark_mode"]:
-        st.session_state["dark_mode"] = dark
-        st.rerun()
-    with col2:
+        page = st.radio(
+            "",
+            [
+                "Profile",
+                "AI Roadmap",
+                "Skill Gap",
+                "Courses & Certs",
+                "Progress Tracker",
+                "Dashboard",
+            ],
+            index=[
+                "Profile",
+                "AI Roadmap",
+                "Skill Gap",
+                "Courses & Certs",
+                "Progress Tracker",
+                "Dashboard",
+            ].index(st.session_state["page"])
+        )
+
+        st.session_state["page"] = page
+
+        st.divider()
+
+        dark = st.toggle(
+            "🌙 Dark Mode",
+            value=st.session_state["dark_mode"]
+        )
+
+        if dark != st.session_state["dark_mode"]:
+            st.session_state["dark_mode"] = dark
+            st.rerun()
+
+with col2:
     pass
         
         # ध्यान दें: इन सभी लाइनों के आगे 4 स्पेस (या एक Tab) होना ज़रूरी है!
