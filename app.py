@@ -30,6 +30,7 @@ from frontend.chatbot_widget import render_chatbot
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
     pill_row, milestone_node, skill_gap_row, empty_state,
+    render_landing_page
 )
 from frontend.charts import readiness_gauge, skill_gap_bar, weekly_effort_line, progress_donut
 
@@ -57,17 +58,20 @@ DEFAULTS = {
     "profile": None,
     "roadmap": None,
     "completed_weeks": set(),
-    "page": "Profile",
+    "page": "Landing",
 }
 for key, value in DEFAULTS.items():
     st.session_state.setdefault(key, value)
 
 inject_css(dark_mode=st.session_state["dark_mode"])
 
+# If the user is on the landing page, show it and stop executing the rest of app.py
+if st.session_state["page"] == "Landing":
+    render_landing_page()
+    st.stop()
 
-# ----------------------------------------------------------------------
 # Sidebar navigation
-# ----------------------------------------------------------------------
+# -------------------------------------------------------------
 with st.sidebar:
     st.markdown(
         "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 LearnMate AI</h2>"
@@ -97,7 +101,12 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("---")
-    status_ok = CONFIG.is_configured
+if st.sidebar.button("🏠 Back to Home"):
+    st.session_state["page"] = "Landing"
+    st.rerun()
+
+st.markdown("---")
+status_ok = CONFIG.is_configured
     status_label = "🟢 watsonx.ai configured" if status_ok else "🟡 Offline demo mode"
     st.caption(status_label)
     if not status_ok:
