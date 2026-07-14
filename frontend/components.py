@@ -175,10 +175,13 @@ def render_landing_page():
         st.markdown("<p style='color: #8B949E; font-size: 16px; margin: 20px 0 35px 0;'>Stop guessing about your future. Get personalized career guidance, skill gap analysis, resume reviews, and tailored learning roadmaps.</p>", unsafe_allow_html=True)
         
         # The Core Redirection Trigger
-if st.button("🚀 Start Your Journey", key="hero_start_btn"):
-    st.session_state["show_landing"] = False # लैंडिंग पेज को छुपाएं
-    st.session_state["page"] = "Profile"     # सीधे प्रोफाइल फॉर्म पर भेजें
+# इसे पुराने st.button वाले कोड से बदलें:
+st.write("") # थोड़ी खाली जगह के लिए
+if st.button("🚀 Start Your Journey", use_container_width=True):
+    st.session_state["show_landing"] = False
+    st.session_state["page"] = "Profile"
     st.rerun()
+
 
             
     with col2:
