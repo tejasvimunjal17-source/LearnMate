@@ -25,12 +25,10 @@ from backend.pdf_report import build_pdf_report
 from utils.validators import validate_profile
 
 from frontend.styles import inject_css
-
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
     pill_row, milestone_node, skill_gap_row, empty_state,
 )
-
 from frontend.charts import readiness_gauge, skill_gap_bar, weekly_effort_line, progress_donut
 
 logger = get_logger(__name__)
@@ -52,7 +50,6 @@ st.set_page_config(
 # ----------------------------------------------------------------------
 # Session state defaults
 # ----------------------------------------------------------------------
-# 1. पहले डिफ़ॉल्ट डिक्शनरी (यह आपका पुराना कोड है)
 DEFAULTS = {
     "dark_mode": True,
     "profile": None,
@@ -60,20 +57,18 @@ DEFAULTS = {
     "completed_weeks": set(),
     "page": "Profile",
 }
-
-
-# 2. डिफ़ॉल्ट सेटिंग्स को लोड करना (यह भी पुराना कोड है)
 for key, value in DEFAULTS.items():
     st.session_state.setdefault(key, value)
 
 inject_css(dark_mode=st.session_state["dark_mode"])
 
 
+# ----------------------------------------------------------------------
 # Sidebar navigation
-# -------------------------------------------------------------
+# ----------------------------------------------------------------------
 with st.sidebar:
     st.markdown(
-        "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 LearnMate AI</h2>"
+        "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 Learnmate AI </h2>"
         "<p class='muted' style='margin-top:2px;'>AI Mentor powered by IBM Granite</p>",
         unsafe_allow_html=True,
     )
@@ -98,8 +93,7 @@ with st.sidebar:
     if dark != st.session_state["dark_mode"]:
         st.session_state["dark_mode"] = dark
         st.rerun()
-        
-        # ध्यान दें: इन सभी लाइनों के आगे 4 स्पेस (या एक Tab) होना ज़रूरी है!
+
     st.markdown("---")
     status_ok = CONFIG.is_configured
     status_label = "🟢 watsonx.ai configured" if status_ok else "🟡 Offline demo mode"
@@ -109,6 +103,7 @@ with st.sidebar:
             "Add WATSONX_API_KEY, WATSONX_PROJECT_ID, WATSONX_URL and "
             "WATSONX_MODEL_ID to your .env file to enable live AI generation."
         )
+
 
 # ----------------------------------------------------------------------
 # PAGE: Profile
@@ -393,3 +388,22 @@ def render_dashboard_page() -> None:
     if gaps:
         st.plotly_chart(skill_gap_bar(gaps, st.session_state["dark_mode"]), use_container_width=True)
 
+
+# ----------------------------------------------------------------------
+# Router
+# ----------------------------------------------------------------------
+PAGES = {
+    "Profile": render_profile_page,
+    "AI Roadmap": render_roadmap_page,
+    "Skill Gap": render_skill_gap_page,
+    "Courses & Certs": render_courses_page,
+    "Progress Tracker": render_progress_page,
+    "Dashboard": render_dashboard_page,
+}
+
+try:
+    PAGES[st.session_state["page"]]()
+except Exception as exc:  # noqa: BLE001 - top-level safety net
+    logger.exception("Unhandled error rendering page '%s'", st.session_state["page"])
+    st.error(f"An unexpected error occurred: {exc}")
+    st.caption("Please refresh the page or check the logs for more details.")
