@@ -216,16 +216,5 @@ def inject_css(dark_mode: bool = True) -> None:
         }}
     </style>
     """
-    _render_css(css_payload = f""" /* ---------- Custom Sidebar ---------- */
-
-.stButton button{
-    border-radius:14px;
-}
-
-div[data-testid="column"]:first-child{
-    background:#161A3A;
-    padding:15px;
-    border-radius:18px;
-    min-height:100vh;
-} """)
+    _render_css(css_payload = )
 
