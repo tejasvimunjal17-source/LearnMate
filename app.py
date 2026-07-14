@@ -30,8 +30,8 @@ from frontend.chatbot_widget import render_chatbot
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
     pill_row, milestone_node, skill_gap_row, empty_state,
-    render_landing_page
 )
+
 from frontend.charts import readiness_gauge, skill_gap_bar, weekly_effort_line, progress_donut
 
 logger = get_logger(__name__)
