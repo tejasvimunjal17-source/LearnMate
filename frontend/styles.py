@@ -26,36 +26,6 @@ from __future__ import annotations
 import textwrap
 import streamlit as st
 
-def apply_custom_theme():
-    """ Injects CSS styles to mimic the dark/amber layout """
-    st.markdown("""
-        <style>
-            /* Base dark application background adjustment */
-            .stApp {
-                background-color: #0D1117 !important;
-                color: #FFFFFF !important;
-            }
-            
-            /* Customizing the main interactive CTA buttons to be Amber Orange */
-            div.stButton > button:first-child {
-                background-color: #FF9F1C !important;
-                color: #000000 !important;
-                border-radius: 8px !important;
-                border: none !important;
-                font-weight: 700 !important;
-                font-size: 16px !important;
-                padding: 10px 24px !important;
-                transition: transform 0.1s ease;
-            }
-            
-            div.stButton > button:first-child:hover {
-                transform: scale(1.02);
-                background-color: #E08B14 !important;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-
 FONT_IMPORT = (
     "https://fonts.googleapis.com/css2?"
     "family=Space+Grotesk:wght@500;600;700&"
@@ -216,5 +186,4 @@ def inject_css(dark_mode: bool = True) -> None:
         }}
     </style>
     """
-    _render_css(css_payload = )
-
+    _render_css(css_payload)
