@@ -53,6 +53,7 @@ st.set_page_config(
 # ----------------------------------------------------------------------
 # Session state defaults
 # ----------------------------------------------------------------------
+# 1. पहले डिफ़ॉल्ट डिक्शनरी (यह आपका पुराना कोड है)
 DEFAULTS = {
     "dark_mode": True,
     "profile": None,
@@ -60,17 +61,23 @@ DEFAULTS = {
     "completed_weeks": set(),
     "page": "Profile", 
 }
+
+# 2. डिफ़ॉल्ट सेटिंग्स को लोड करना (यह भी पुराना कोड है)
 for key, value in DEFAULTS.items():
     st.session_state.setdefault(key, value)
 
 inject_css(dark_mode=st.session_state["dark_mode"])
 
-# If the user is on the landing page, show it and stop executing the rest of app.py
+# 3. सबसे ज़रूरी: पहले 'show_landing' वेरिएबल को बनाएं! 
+if "show_landing" not in st.session_state:
+    st.session_state["show_landing"] = True
+
+# 4. अब गेटकीपर को चेक करें (यह लाइन 69 पर होना चाहिए)
 if st.session_state["show_landing"]:
     render_landing_page()
     st.stop()
 
-
+# 5. इसके बाद ही आपका साइडबार शुरू होगा
 # Sidebar navigation
 # -------------------------------------------------------------
 with st.sidebar:
