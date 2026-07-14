@@ -100,8 +100,16 @@ with st.sidebar:
         st.session_state["dark_mode"] = dark
         st.rerun()
     st.markdown("---")
-  status_ok = CONFIG.is_configured
-    status_label = "🟢 watsonx.ai configured" if status_ok else "🟡 Offline demo mode"
+
+status_ok = CONFIG.is_configured
+
+status_label" watsonx.ai configured" if status_ok else" offline demo mode"
+
+st.caption(status_label)
+
+if not status_ok:
+
+st.caption( "Add WATSONX_API_KEY, WATSONX_PROJECT_ID, WATSONX_URL and " "WATSONX_MODEL_ID to your env file to enable live AI generation." )
 
 
 # ----------------------------------------------------------------------
