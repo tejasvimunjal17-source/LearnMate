@@ -25,7 +25,6 @@ from backend.pdf_report import build_pdf_report
 from utils.validators import validate_profile
 
 from frontend.styles import inject_css
-
 from frontend.components import (
     hero, metric_card, glass_card_open, glass_card_close, progress_bar,
     pill_row, milestone_node, skill_gap_row, empty_state,
