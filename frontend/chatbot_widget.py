@@ -1,3 +1,8 @@
+import streamlit.components.v1 as components
+
+def render_chatbot():
+    components.html("""
+    <div id="root"></div>
 
 <script>
   window.wxOConfiguration = {
@@ -20,3 +25,4 @@
     document.head.appendChild(script);
   }, 0);                     
 </script>
+""", height=0)
