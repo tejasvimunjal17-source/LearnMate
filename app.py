@@ -72,7 +72,23 @@ inject_css(dark_mode=st.session_state["dark_mode"])
 
 # Sidebar navigation
 # -------------------------------------------------------------
-with st.sidebar:
+
+# -------------------------
+# Custom Sidebar
+# -------------------------
+
+if "menu_open" not in st.session_state:
+    st.session_state.menu_open = True
+
+col1, col2 = st.columns([1,8])
+
+with col1:
+    if st.button("☰", key="menu_toggle"):
+        st.session_state.menu_open = not st.session_state.menu_open
+
+if st.session_state.menu_open:
+
+   with col1:
     st.markdown(
         "<h2 class='pathway-display' style='margin-bottom:0;'>🧭 LearnMate AI</h2>"
         "<p class='muted' style='margin-top:2px;'>AI Mentor powered by IBM Granite</p>",
@@ -99,6 +115,8 @@ with st.sidebar:
     if dark != st.session_state["dark_mode"]:
         st.session_state["dark_mode"] = dark
         st.rerun()
+    with col2:
+    pass
         
         # ध्यान दें: इन सभी लाइनों के आगे 4 स्पेस (या एक Tab) होना ज़रूरी है!
     st.markdown("---")
