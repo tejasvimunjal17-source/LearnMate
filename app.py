@@ -15,6 +15,8 @@ from __future__ import annotations
 import streamlit as st
 from streamlit_option_menu import option_menu
 
+from frontend.chatbot_widget import render_chatbot
+
 from config import CONFIG
 from agent_instructions import DOMAIN_SPECIALIZATION
 from backend.logger_setup import get_logger
@@ -407,3 +409,5 @@ except Exception as exc:  # noqa: BLE001 - top-level safety net
     logger.exception("Unhandled error rendering page '%s'", st.session_state["page"])
     st.error(f"An unexpected error occurred: {exc}")
     st.caption("Please refresh the page or check the logs for more details.")
+
+render_chatbot()
